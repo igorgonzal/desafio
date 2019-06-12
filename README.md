@@ -1,4 +1,4 @@
-# desafio
+# Desafio
 Desafio Programador MDI - Linguagem PHP:
 
 * Desenvolvimento de um CRUD de cadastro de produtos em PHP e MySQL.
