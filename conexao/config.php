@@ -1,6 +1,7 @@
 <?php
-define("HOST", "172.16.10.20");
+define("HOST", "localhost");
 define("USER", "root");
-define("PASS", "1Supremonet");
+define("PASS", "");
 define("BASE", "desafio");
+define("CAMINHO", "http://localhost/desafio/controller/");
 
