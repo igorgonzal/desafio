@@ -1,18 +1,20 @@
 <?php
 
-include_once '../conexao/conecta_db.php';
-
+include_once '../../conexao/conecta_db.php';
 
 abstract class generic_crud extends DB {
 
-    public function __construct() {
-
+    public function save($dados, $primary) {
+        if (!empty($dados[$primary])) {
+            $result = $this->update($dados, $primary);
+        } else {
+            $result = $this->insert($dados);
+        }
+        return $result;
     }
 
     public function insert($dados) {
-
-        $attributes = $this->limparCampos($dados);
-        $keys = array_keys($attributes);
+        $keys = array_keys($dados);
         $camposTabela = implode(',', $keys);
         $values = null;
         foreach ($keys as $key) {
@@ -22,21 +24,19 @@ abstract class generic_crud extends DB {
 
         $sql = "INSERT INTO $this->tabela($camposTabela) values($values)";
         $stm = DB::prepare($sql);
-        $stm->execute($attributes);
+        $stm->execute($dados);
         $ultimo_id = DB::getInstance()->lastInsertId();
 
         return $ultimo_id;
     }
 
-    public function update($dados) {
-        $attributes = $this->limparCampos($dados);
-
-        $keys = array_keys($attributes);
+    public function update($dados, $primary) {
+        $keys = array_keys($dados);
         $values = null;
         foreach ($keys as $key) {
             $values .= ',' . $key . '=:' . $key;
         }
-        $id = $attributes['id'];
+        $id = $dados[$primary];
 
         $values = (trim(ltrim($values, ',')));
 
@@ -44,7 +44,7 @@ abstract class generic_crud extends DB {
         $stm = DB::prepare($sql);
         $stm->bindParam(':id', $id);
 
-        return $stm->execute($attributes);
+        return $stm->execute($dados);
     }
 
     public function delete($id) {

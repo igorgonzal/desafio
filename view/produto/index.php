@@ -1,56 +1,44 @@
-<script type="text/javascript">
-	function sair(){
-		window.location.assign("login.php");
-	}
-</script>
-
 <?php
-	include_once "conecta_db.php";
+include_once '../../layout/topo.php';
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Lista de atendimentos</title>
-</head>
-<body>
+<h1>Produtos</h1><br>
+<div class="row">
+    <div class="col-12 col-md-12  form-group">
+        <a href="<?= CAMINHO ?>produto/form.php" class="btn btn-primary"> Cadastro </a>
+        <a href="<?= CAMINHO ?>produto/importarxml.php" class="btn btn-primary"> Importar XML </a>
+    </div>
+</div>
 
-<h1>Lista de atendimentos</h1><br>
+<div class="table-responsive-xl">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Preco</th>
+                <th colspan="4">Acão</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($dados as $value) { ?>
+                <tr>
+                    <td> <?= $value->id ?> </td>
+                    <td> <?= $value->codigo ?> </td>
+                    <td> <?= $value->nome ?> </td>
+                    <td> <?= $value->descricao ?> </td>
+                    <td> <?= $value->preco ?> </td>
+                    <td> <a href='<?= CAMINHO ?>produto/delete.php?id=<?= $value->id ?>' style="color: red;"> <i class="fas fa-trash"></i> </a> 
+                        <a href='<?= CAMINHO ?>produto/form.php?id=<?= $value->id ?>'  style="color: blue;"> <i class="fas fa-pencil-alt"></i> </a> </td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+</div>
 
-<a href="cadastro.php"> Cadastro </a><br>
 
-<table border="1">	
-	<tr>
-		<th>ID</th>
-		<th>Data de atendimento</th>
-		<th>Tipo de atendimento</th>
-		<th>Nome do cliente</th>
-		<th>Tecnico</th>
-		<th colspan="4">Acão</th>
-	</tr>
-
-	<?php 
-		/*$sql = "SELECT a.id, a.data, a.atendimento, a.cliente, a.usuario_id, u.login FROM atendimento a join usuario u on a.usuario_id = u.id";
-		$retorno = $con->query($sql);
-		while ($registo = $retorno->fetch_assoc()){	
-
-			echo "<tr>
-				<td> $registo[id] </td>
-				<td> $registo[data] </td>
-				<td> $registo[atendimento] </td>
-				<td> $registo[cliente] </td>
-				<td> $registo[login] </td>
-				<td> <a href='excluir.php?id=$registo[id]'> excluir </a> <td>
-				<td> <a href='edita.php?id=$registo[id]'> editar </a> <td>
-			</tr>" ;
-			
-		}
-		*/
-	?>
-
-</table>
-
-<button onclick="sair()" name="Sair" value="Sair">Sair</button>
-
-</body>
-</html>
+<?php
+include_once '../../layout/topo.php';
+?>            
